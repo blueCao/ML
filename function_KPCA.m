@@ -20,7 +20,11 @@ function [Y] = function_KPCA(X,k)
     K = zeros(N,N);
     for i = 1 :N
        for j = 1 : N
-          K(i,j) = X(:,i)' * X(:,j); 
+          %linear kernal
+          %K(i,j) = X(:,i)' * X(:,j); 
+
+          %gaussian kernal
+          K(i,j) = exp(-sqrt((X(:,i) - X(:,j))' * (X(:,i) - X(:,j)))/2/100);
        end
     end
     
