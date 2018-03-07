@@ -30,7 +30,7 @@ function [Y,egi_vectors] = function_MDS(x,k)
         end
     end
     % eigent values and vectors
-    [egi_vectors,egi_values]=eig(cov(x'));
+    [egi_vectors,egi_values]=eig(b);
     [value_sort,sort_index]=sort(diag(egi_values),'descend');
     egi_vectors = egi_vectors(:,sort_index);
     egi_vectors = egi_vectors(:,1:k)
