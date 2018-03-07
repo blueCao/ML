@@ -23,7 +23,7 @@ function [Y,egi_vectors] = function_MDS(x,k)
     end
     % calculate b(i,j)
     b = zeros(n,n);
-    m = mean(mean(dist_2)) / n;
+    m = mean(mean(dist_2));
     for i = 1 : n
         for j = 1 : n
             b(i,j) = -0.5 * (dist_2(i,j) + m - mean(dist_2(i,:)) - mean(dist_2(j,:)));
