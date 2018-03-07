@@ -9,9 +9,9 @@ Output:
     Y: transformed value of data X
 
 %}
-function [ Y ] = function_Isomap(X, epsilon, k)
-    m = size(Y,1);
-    n = size(Y,2);
+function [ Y,dist ] = function_Isomap(X, epsilon, k)
+    m = size(X,1);
+    n = size(X,2);
     % 1.caculate the neighbor graph
     dist = zeros(n,n);
     dist(:,:) = inf;
@@ -27,7 +27,7 @@ function [ Y ] = function_Isomap(X, epsilon, k)
     
     % 2.construct shortest path
     for i = 1 : n
-        dist = min(D,repmat(dist(:,i),[1 n])+repmat(dist(i,:),[n 1])); 
+        dist = min(dist,repmat(dist(:,i),[1 n])+repmat(dist(i,:),[n 1])); 
     end
     
     % 3.remove outliers from graph
@@ -44,7 +44,7 @@ function [ Y ] = function_Isomap(X, epsilon, k)
         component_size(1,component_index(1,i)) = component_size(1,component_index(1,i)) + 1;
    end
    [largest_size,largest_index] = max(component_size);
-   dist_index = find(component_index == largest_index)     % keep the largest components index
+   dist_index = find(component_index == largest_index);     % keep the largest components index
    dist = dist(dist_index,dist_index);      % keep the largest component only
    
    % 4.MDS
@@ -60,6 +60,10 @@ function [ Y ] = function_Isomap(X, epsilon, k)
     [egi_vectors,egi_values]=eig(b);
     [value_sort,sort_index]=sort(diag(egi_values),'descend');
     egi_vectors = egi_vectors(:,sort_index);
-    egi_vectors = egi_vectors(:,1:k)
-    Y =egi_vectors'*X;
+    egi_vectors = egi_vectors(:,1:k);
+    egi_values = diag(egi_values);
+    egi_values = egi_values(sort_index,:);
+    egi_values = egi_values(1:k,:);
+    
+    Y =diag(egi_values)*sqrt(egi_vectors)';
 end
