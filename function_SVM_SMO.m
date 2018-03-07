@@ -26,21 +26,55 @@ function [w,b] = function_SVM_SMO(x1,x2,C,mini)
     % satisfied kkt
     while 1 = 1
        k = 0;
-       type = 0;% type 1: 0<alp<C,type 2: 0=alp,type 3: alp=C,    
+       type = 0;% type 1: 0<alp<C,type 2: 0=alp,type 3: alp=C,
+        %0<alp<C       
         for i = 1 : n
-           sum = y(1,i) * (w' * x(:,i) + b;
+           sum = y(1,i) * (w' * x(:,i) + b);
            if 0 < alp(1,i) && alp(1,i) < C
-              
-              type = 1;
-              k = i;
-              break;
-           elseif alp(1,i) == 0
-               type = 2;
-               k = i;
-               break;
-           elseif alp(1,i) == 0
-               
+              if abs(sum - 1) >= min
+                  type = 1;
+                  k = i;
+                  break;
+              end
            end
+        end
+        % alpha = 0
+        if type == 0
+             for i = 1 : n
+               sum = y(1,i) * (w' * x(:,i) + b);
+               if alp(1,i) == 0
+                  if sum < 1
+                      type = 2;
+                      k = i;
+                      break;
+                  end
+               end
+            end 
+        end
+        % alpha = C
+        if type == 0
+             for i = 1 : n
+               sum = y(1,i) * (w' * x(:,i) + b);
+               if abs(alp(1,i) - C) < mini
+                  if sum >= 1
+                      type = 3;
+                      k = i;
+                      break;
+                  end
+               end
+            end 
+        end
+        
+        % all satisfied kkt
+        if type == 0
+            break;
+        end
+        
+        % chose k,k+1
+        k_1 = mod(k,n) + 1;
+        
+        if type == 1
+           alpha(1,k) 
         end
     end
 end
