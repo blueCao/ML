@@ -18,7 +18,7 @@ function [Y,egi_vectors] = function_MDS(x,k)
     dist_2 = zeros(n,n);
     for i = 1 : n
         for j = 1 : n
-            dist_2(i,j) = x(1,i)' * x(1,j);
+            dist_2(i,j) = (x(1,i) - x(1,j))' * (x(1,i) - x(1,j));
         end
     end
     % calculate b(i,j)
