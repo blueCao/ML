@@ -33,6 +33,10 @@ function [Y,egi_vectors] = function_MDS(x,k)
     [egi_vectors,egi_values]=eig(b);
     [value_sort,sort_index]=sort(diag(egi_values),'descend');
     egi_vectors = egi_vectors(:,sort_index);
-    egi_vectors = egi_vectors(:,1:k)
-    Y =egi_vectors'*x;
+    egi_vectors = egi_vectors(:,1:k);
+    egi_values = diag(egi_values);
+    egi_values = egi_values(sort_index,:);
+    egi_values = egi_values(1:k,:);
+    
+    Y =diag(egi_values)*sqrt(egi_vectors)';
 end
