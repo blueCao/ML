@@ -29,7 +29,6 @@ function [ Y,dist ] = function_Isomap(X, epsilon, k)
     for i = 1 : n
         dist = min(dist,repmat(dist(:,i),[1 n])+repmat(dist(i,:),[n 1])); 
     end
-    
     % 3.remove outliers from graph
     component_index = 1 : n;    % components label
     for i = 1 : n
