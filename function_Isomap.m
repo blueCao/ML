@@ -19,7 +19,7 @@ function [ Y,dist ] = function_Isomap(X, epsilon, k)
        for j = 1 : n
           dist_ij = sqrt( (X(:,i) - X(:,j))' *  (X(:,i) - X(:,j)) );
           if dist_ij < epsilon
-             dist(i,j) = epsilon; 
+             dist(i,j) = dist_ij; 
           end
        end
     end
@@ -48,6 +48,7 @@ function [ Y,dist ] = function_Isomap(X, epsilon, k)
    dist = dist(dist_index,dist_index);      % keep the largest component only
    
    % 4.MDS
+   dist = dist.*dist;
    m = mean(mean(dist));
        % calculate b(i,j)
     b = zeros(length(dist),length(dist));
@@ -58,6 +59,7 @@ function [ Y,dist ] = function_Isomap(X, epsilon, k)
     end
     % eigent values and vectors
     [egi_vectors,egi_values]=eig(b);
+    egi_values = real(egi_values);
     [value_sort,sort_index]=sort(diag(egi_values),'descend');
     egi_vectors = egi_vectors(:,sort_index);
     egi_vectors = egi_vectors(:,1:k);
@@ -65,5 +67,6 @@ function [ Y,dist ] = function_Isomap(X, epsilon, k)
     egi_values = egi_values(sort_index,:);
     egi_values = egi_values(1:k,:);
     
-    Y =diag(egi_values)*sqrt(egi_vectors)';
+    Y =egi_vectors * sqrt(diag(egi_values));
+    Y = Y';
 end
