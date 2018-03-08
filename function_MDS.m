@@ -38,6 +38,6 @@ function [Y,egi_vectors] = function_MDS(x,k)
     egi_values = egi_values(sort_index,:);
     egi_values = egi_values(1:k,:);
     
-    Y =egi_vectors' * sqrt(diag(egi_values));
+    Y =egi_vectors * sqrt(diag(egi_values));
     Y = Y';
 end
