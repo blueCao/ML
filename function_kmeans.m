@@ -22,7 +22,9 @@ function [center,matrix_0_1] = function_kmeans(X,k)
     center_before = center;
     %2. iterator: find the center point
     matrix_0_1 = zeros(k,N);
+    iterator = 0; % iterator times recordor
     while 1
+        iterator = iterator + 1;
         distances = zeros(1,k);
         matrix_0_1(:) = 0;
         for i = 1 : N
@@ -48,4 +50,7 @@ function [center,matrix_0_1] = function_kmeans(X,k)
         end
         center_before = center;
     end
+    disp('finished with iterator = ');
+    disp(iterator);
+    
 end
