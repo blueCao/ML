@@ -1,11 +1,13 @@
+
+
 # Dimension Reduction（降维）
 - ### KL(PCA)主成分分析降维
 > 将所有数据的最终的值看成是由一组互相正交的向量集以及向量对应的系数相乘求和而来。所以主成分分析的目的就是找到一组这样的正交向量，求得对应的系数。降维的目的就是找到前k组重要程度最高的基向量，使得与降维前的平方损失最小。而变换矩阵的求解由数学证明可知，是原始数据协方差矩阵的前k大特征值对应的特征向量。    
 
 [数学证明参考链接](https://github.com/blueCao/ML/tree/master/KL-PCA)
 
-- ### KPCA（核函数主成分分析）
-> PCA应用的是线性核函数，只能分离出线性成分的分量。而KPCA可选用多种[核函数](http://blog.csdn.net/wsj998689aa/article/details/47027365)（高斯核、多项式核等等）
+- KPCA（核函数主成分分析）
+> 
 
 - ### MDS（multiple dimension scaling）多维尺度分析
 > 利用欧式距离矩阵 求解 所需矩阵 B=X'X，与KL（PCA）的(X-E(X))'(X-E(X))不同。
@@ -25,4 +27,12 @@
 > 算法与Isomap的思想类似，但是Isomap在数据量巨大维度高时，求解最短路径时需要大量计算时间，而LLE算法在求解时，采用局部线性的假设，在最小化均方误差的总体目标下，计算系数矩阵W，再通过计算特征值、特征向量得到前k大的特征向量，进而降维  
 
 [示例代码](https://cs.nyu.edu/~roweis/lle/)  
-[原理、公式推导](https://www.cnblogs.com/pinard/p/6266408.html?utm_source=itdadao&utm_medium=referral)
+[原理、公式推导](https://www.cnblogs.com/pinard/p/6266408.html?utm_source=itdadao&utm_medium=referral)  
+
+
+# Unsupervised Learning--Clustering（非监督学习--聚类模型）
+- ### K-means（K均值聚类）
+> 需要优化距离和损失使得最小，与通用的ER算法类似。  
+E step：求得期望（这一轮已经分好类的样本的重心作为新的重心）  
+M step：最小化（使得对应当前的重心，需要做新一轮分类使得损失再降低。  
+
