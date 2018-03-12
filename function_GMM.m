@@ -17,7 +17,7 @@ function [alphas, mus, sigmas] = function_GMM(X, k, theta)
     % 1. init alphas (weights)¡¢alphas¡¢mus, sigmas
     alphas = zeros(1,k);
     alphas(:) = 1 / k; 
-    [mus,tmp] = function_kmeans(X,k)      % init mu with kmeans cluster center points
+    [mus,tmp] = function_kmeans(X,k);      % init mu with kmeans cluster center points
     sigmas = zeros(m,k*m);
     diag_1 = zeros(1,m);
     diag_1 = rand(1,m) * 10;
@@ -31,13 +31,13 @@ function [alphas, mus, sigmas] = function_GMM(X, k, theta)
     mini_alphas(:) = theta;
     mini_mus(:) = theta;
     mini_sigmas(:) = theta;
-
+    
     iterator = 1;
     while 1
         % 2.1 E step: calculate the response degree
         r = zeros(k,N);
         
-        alpha_pdf = zeros(k,N); % the temp value of alpha * pdf
+        alpha_pdf = zeros(k,N); % the temp value of  alpha * pdf
         for i = 1 : k
            for j = 1 : N
               alpha_pdf(i,j) = alphas(i) *  function_gauss_pdf(X(:,j),mus(:,i),sigmas(:,m*(i-1)+1:m*i));
@@ -65,11 +65,11 @@ function [alphas, mus, sigmas] = function_GMM(X, k, theta)
             sum_up_r(i) = sum(r(i,:));
         end
         for i = 1 : k
-            mus(:,i) = (sum( r(i,:) * X' ) / sum_up_r(i))';    % update mus
+            mus(:,i) = r(i,:) * X' / sum_up_r(i)';    % update mus
             
             sum_up = zeros(m,m);    % tmp value of sum up r * (x - mu) * (x - mu)'
             for j = 1 :N
-                sum_up = sum_up + r(i,j) * ( X(:,j) - mus(:,k)) * ( X(:,j) - mus(:,k))'; % update 
+                sum_up = sum_up + r(i,j) * ( X(:,j) - mus(:,i)) * ( X(:,j) - mus(:,i))'; % update 
             end
             sigmas(:,m*(i-1)+1:m*i) =  sum_up / sum_up_r(i);  % update sigmas
             
@@ -83,4 +83,5 @@ function [alphas, mus, sigmas] = function_GMM(X, k, theta)
         iterator = iterator + 1;
     end
     iterator
+
 end
