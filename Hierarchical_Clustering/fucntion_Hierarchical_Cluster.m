@@ -38,14 +38,14 @@ function [ cluster_map, layer ] = fucntion_Hierarchical_Cluster( sim, min_sim)
         current_largest_sim = realmin;
         
         for i = 1 : len
-           for j = [i + 1 : len]
+           for j = i + 1 : len
                cluster_i = zeros(1,N);  % cluster i's index
                cluster_j = zeros(1,N);  % cluster j's index
                cluster_i_len = 0;       % cluster i's current length
                cluster_j_len = 0;       % cluster J's current length
                
-               i_tag = ic(ia(i));% cluster i's tag
-               j_tag = ic(ia(j));% cluster j's tag
+               i_tag = ic(i);% cluster i's tag
+               j_tag = ic(j);% cluster j's tag
                
                % 2.2 find all cluster i datas and cluster j datas
                for k = 1 : N
@@ -60,12 +60,12 @@ function [ cluster_map, layer ] = fucntion_Hierarchical_Cluster( sim, min_sim)
                end
                
                % 2.3 caculate the min similarity between cluster i and j
-               min_sim_cluster_i_j = min(sim(cluster_i(1:cluster_i_len), cluster_j(1:cluster_j_len)));
+               min_sim_cluster_i_j = min(min(sim(cluster_i(1:cluster_i_len), cluster_j(1:cluster_j_len))));
                
                % 2.4 update the largest similarity of two cluster i,j
                if current_largest_sim < min_sim_cluster_i_j
-                    min_1_tag = i;
-                    min_2_tag = j;
+                    min_1_tag = cluster_map(iterator,ia(i_tag));
+                    min_2_tag = cluster_map(iterator,ia(j_tag));
                     current_largest_sim = min_sim_cluster_i_j;
                end
            end
@@ -82,8 +82,12 @@ function [ cluster_map, layer ] = fucntion_Hierarchical_Cluster( sim, min_sim)
         cluster_map(iterator,:) = cluster_map(iterator-1,:);
         cluster_map(iterator,cluster_map(iterator,:)==max([min_1_tag,min_2_tag])) = min([min_1_tag,min_2_tag]);
 
-        disp('iterator=');
-        disp(iterator);
+        % show progress
+        iterator
+        current_largest_sim
+        min_1_tag
+        min_2_tag
+        cluster_map(iterator,:)
     end
     
     layer = iterator;
