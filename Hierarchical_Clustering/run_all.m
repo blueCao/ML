@@ -24,3 +24,9 @@ end
  [ sim ] = function_similarity_matrix( X' );
 
 % 4. perform Hierarchical  Clustering
+min_sim = 0.6;  % settting the mininum similarity of the Hierarchical clustering
+[ cluster_map, layer ] = fucntion_Hierarchical_Cluster( sim, min_sim);
+
+% 5. ouput the result
+result_file_path='result.csv';  % specify the output file paht
+[ result_fille ] = function_export_result(cluster_map(layer,:), raw, result_file_path);
