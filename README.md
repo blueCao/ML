@@ -73,14 +73,17 @@ M step：最小化（使得对应当前的重心，需要做新一轮分类使�
 > 3. 平均距离 
 ![相似度函数](http://ot9oq7g6m.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180312220817.png)   
 
-[分层聚类的应用](http://www.cs.umd.edu/hcil/hce/examples/application_examples.html)
+[分层聚类中的一些应用](http://www.cs.umd.edu/hcil/hce/examples/application_examples.html)  
+[应用示例：食物根据营养相似度进行聚类](https://github.com/blueCao/ML/tree/master/Hierarchical_Clustering)
 
 - ### 基于密度的聚类算法 - DBSCAN
 > 思想：基于“所有聚合的中心密度大，边缘密度小。密度在大于某一个阈值则归为一个集群，密度小于某一集群则归为噪声”的假设
 
 > 概念和算法如下
 ![DBSCAN](http://ot9oq7g6m.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180313110058.png)
+
 ![DBSCAN](http://ot9oq7g6m.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180313110111.png)
+
 ![DBSCAN](http://ot9oq7g6m.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180313110124.png)
 
 > 优点：  
