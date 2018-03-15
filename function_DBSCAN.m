@@ -49,8 +49,7 @@ function [ y ] = function_DBSCAN(X, epsilon, k)
      % 4. label the core point with 1,2,3...N
       core_points_labels = 1 : core_point_index(N+1);
       core_point_length = core_point_index(N+1);
-is_core_points_index
-core_point_index
+      
      % 5. combime the nearby core points until the core labels don't change
      while 1
         changed = 0;% shows the core pont label changed or not
@@ -61,8 +60,9 @@ core_point_index
                 core_b_index = core_point_index(cluster_b);
                 
                 % combine the nearby core points into the same one
-                if reachable(core_a_index,core_b_index) == 1 && core_points_labels(is_core_points_index(core_a_index)) ~= core_points_labels(is_core_points_index(core_b_index))
-                    core_points_labels(is_core_points_index(core_a_index)) = core_points_labels(is_core_points_index(core_b_index));
+                if reachable(core_a_index,core_b_index) == 1 && core_points_labels(cluster_a) ~= core_points_labels(cluster_b);
+                    core_points_labels(cluster_b) = min(core_points_labels(cluster_a),core_points_labels(cluster_b) );
+                    core_points_labels(cluster_a) = min(core_points_labels(cluster_a),core_points_labels(cluster_b) );
                     changed  = 1;
                 end
            end
@@ -105,7 +105,7 @@ core_point_index
         end
          % draw the noise points
          y_i = find(y==0);
-        scatter(X(1,y_i),X(2,y_i),'d');
+        scatter(X(1,y_i),X(2,y_i),'square');
         
          % draw the core points
         scatter(X(1,core_point_index(1:core_point_index(N+1))),X(2,core_point_index(1:core_point_index(N+1))),'.');
